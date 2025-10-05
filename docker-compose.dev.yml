@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Development service with hot reload
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - STREAMLIT_SERVER_RUN_ON_SAVE=true
+      - STREAMLIT_SERVER_SHOW_FILE_WATCHER=true
+    command: streamlit run gpt.py --server.port=8501 --server.address=0.0.0.0 --server.runOnSave=true
+    restart: unless-stopped
+
+  # Development Q&A
+  qa:
+    build: .
+    ports:
+      - "8502:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - STREAMLIT_SERVER_RUN_ON_SAVE=true
+      - STREAMLIT_SERVER_SHOW_FILE_WATCHER=true
+    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0 --server.runOnSave=true
+    restart: unless-stopped
+
+  # Development Chat
+  chat:
+    build: .
+    ports:
+      - "8503:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - STREAMLIT_SERVER_RUN_ON_SAVE=true
+      - STREAMLIT_SERVER_SHOW_FILE_WATCHER=true
+    command: streamlit run chat.py --server.port=8501 --server.address=0.0.0.0 --server.runOnSave=true
+    restart: unless-stopped
+
+  # Development Q&A Chat
+  qachat:
+    build: .
+    ports:
+      - "8504:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - STREAMLIT_SERVER_RUN_ON_SAVE=true
+      - STREAMLIT_SERVER_SHOW_FILE_WATCHER=true
+    command: streamlit run qachat.py --server.port=8501 --server.address=0.0.0.0 --server.runOnSave=true
+    restart: unless-stopped
+
+  # Development Vision
+  vision:
+    build: .
+    ports:
+      - "8505:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    environment:
+      - STREAMLIT_SERVER_RUN_ON_SAVE=true
+      - STREAMLIT_SERVER_SHOW_FILE_WATCHER=true
+    command: streamlit run vision.py --server.port=8501 --server.address=0.0.0.0 --server.runOnSave=true
+    restart: unless-stopped
